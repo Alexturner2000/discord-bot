@@ -1,16 +1,8 @@
-"""
-Rest API for logic module
-
-"""
-
-import discord
 import json
 import requests
+import discord
 
 server_ip = 'localhost'
-
-
-# MORE info located http://{server_ip}:4567/swagger#/'
 
 # test
 req_url_ping = f"http://{server_ip}:4567/v1/ping"
@@ -26,10 +18,11 @@ req_url_players = f"http://{server_ip}:4567/v1/players"
 req_url_plugins = f"http://{server_ip}:4567/v1/plugins"
 
 
-selector = req_url_server
-get = requests.get(selector)
+def handle_response(message) -> str:
+    """Handles the response to a user message."""
 
-json_obj = json.dumps(get.json(), indent=4)
-
-# print name value from json_obj
-print(json_obj[0])
+    if message == "/start":
+        selector = req_url_server
+        get = requests.get(selector)
+        json_obj = json.dumps(get.json(), indent=4)
+        return str(json_obj)
